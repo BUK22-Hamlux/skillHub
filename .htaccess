@@ -1,0 +1,22 @@
+# SkillHub – Apache config
+
+Options -Indexes
+ServerSignature Off
+
+# PHP session hardening
+php_value session.cookie_httponly 1
+php_value session.use_strict_mode 1
+php_value session.cookie_samesite Lax
+
+# Deny direct access to config & includes
+<FilesMatch "\.(sql|md)$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Block access to config/ and includes/ directories
+    RewriteRule ^(config|includes)/ - [F,L]
+</IfModule>

@@ -1,0 +1,182 @@
+/* ============================================================
+   ui.css — Modals, animations, JS-driven components
+   ============================================================ */
+
+/* ── Shake animation ──────────────────────────────────────── */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  15%       { transform: translateX(-6px); }
+  30%       { transform: translateX(5px); }
+  45%       { transform: translateX(-4px); }
+  60%       { transform: translateX(3px); }
+  75%       { transform: translateX(-2px); }
+}
+.shake { animation: shake .55s var(--ease-out) both; }
+
+/* ── Confirm delete modal ─────────────────────────────────── */
+.confirm-modal {
+  display: none;
+  position: fixed; inset: 0; z-index: 1000;
+}
+.confirm-modal.open { display: flex; align-items: center; justify-content: center; }
+
+.confirm-modal__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(15,22,35,.55);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 200ms ease both;
+}
+
+.confirm-modal__box {
+  position: relative; z-index: 1;
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem 2rem;
+  max-width: 380px; width: calc(100% - 2rem);
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  animation: scaleIn 200ms var(--ease-spring) both;
+}
+.confirm-modal__icon {
+  font-size: 3rem; margin-bottom: 1rem;
+  display: block;
+}
+.confirm-modal__title {
+  font-size: 1.1rem; font-weight: 700;
+  color: var(--ink); margin-bottom: .5rem;
+  font-family: var(--font-display);
+}
+.confirm-modal__msg {
+  color: var(--mist); font-size: .9rem;
+  margin-bottom: 1.75rem; line-height: 1.5;
+}
+.confirm-modal__actions {
+  display: flex; gap: .75rem; justify-content: center;
+}
+
+/* ── Password strength meter ──────────────────────────────── */
+.pwd-strength {
+  display: flex; align-items: center; gap: .6rem;
+  margin-top: .35rem;
+  animation: fadeIn 200ms ease both;
+}
+.pwd-strength__bar {
+  flex: 1; height: 4px;
+  background: var(--fog); border-radius: 99px; overflow: hidden;
+}
+.pwd-strength__fill {
+  height: 100%; border-radius: 99px; width: 0;
+  background: var(--mist);
+  transition: width .4s var(--ease-out), background .4s;
+}
+.pwd-strength__label {
+  font-size: .75rem; font-weight: 600;
+  min-width: 60px; text-align: right;
+  color: var(--mist);
+}
+
+/* ── Search count indicator ───────────────────────────────── */
+.search-count {
+  display: block;
+  font-size: .75rem; color: var(--mist);
+  margin-top: .25rem;
+}
+
+/* ── Live search bars ─────────────────────────────────────── */
+.list-search-bar {
+  position: relative; margin-bottom: 1.25rem;
+}
+.list-search-bar input {
+  width: 100%;
+  border: 2px solid var(--fog);
+  border-radius: var(--radius-lg);
+  padding: .7rem 1rem .7rem 2.6rem;
+  font-size: .92rem; font-family: var(--font-ui);
+  background: var(--white); color: var(--ink);
+  box-shadow: var(--shadow-xs);
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+}
+.list-search-bar input:focus {
+  outline: none; border-color: var(--ink-mid);
+  box-shadow: 0 0 0 4px rgba(30,45,69,.08);
+}
+.list-search-bar::before {
+  content: '🔍';
+  position: absolute; left: .85rem; top: 50%;
+  transform: translateY(-50%);
+  font-size: .85rem; pointer-events: none;
+}
+
+/* ── Form valid state ─────────────────────────────────────── */
+.form-group.is-valid input,
+.form-group.is-valid select {
+  border-color: var(--green);
+}
+
+/* ── Tooltip ──────────────────────────────────────────────── */
+[data-tip] {
+  position: relative; cursor: help;
+}
+[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute; bottom: calc(100% + 6px); left: 50%;
+  transform: translateX(-50%) scale(.95);
+  background: var(--ink); color: var(--white);
+  font-size: .75rem; font-weight: 500;
+  padding: .3rem .7rem; border-radius: var(--radius-sm);
+  white-space: nowrap; pointer-events: none;
+  opacity: 0; transition: opacity var(--dur-fast), transform var(--dur-fast);
+  font-family: var(--font-ui);
+}
+[data-tip]:hover::after {
+  opacity: 1; transform: translateX(-50%) scale(1);
+}
+
+/* ── Hero section (index.php) ─────────────────────────────── */
+.hero {
+  text-align: center;
+  padding: 5rem 1rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(245,158,11,.08) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none;
+}
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.15; margin-bottom: 1rem;
+  font-family: var(--font-display);
+}
+.hero h1 span { color: var(--amber-dark); }
+.hero p {
+  color: var(--mist); font-size: 1.1rem;
+  max-width: 520px; margin: 0 auto 2.25rem;
+  line-height: 1.65;
+}
+.hero__cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+.hero__stats {
+  display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;
+  margin-top: 3rem; padding-top: 2.5rem;
+  border-top: 1px solid var(--fog);
+}
+.hero__stat { text-align: center; }
+.hero__stat strong {
+  display: block; font-size: 1.75rem; font-weight: 800;
+  font-family: var(--font-display);
+  color: var(--ink);
+}
+.hero__stat span { font-size: .82rem; color: var(--mist); font-weight: 500; }
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--snow); }
+::-webkit-scrollbar-thumb { background: var(--fog); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--mist); }
+
+/* ── Selection ────────────────────────────────────────────── */
+::selection { background: var(--amber-light); color: var(--ink); }

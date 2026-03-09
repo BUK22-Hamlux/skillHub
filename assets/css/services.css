@@ -1,0 +1,168 @@
+/* ============================================================
+   services.css — Service Management Module (v2)
+   ============================================================ */
+
+/* ── Service grid ─────────────────────────────────────────── */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1.25rem;
+}
+
+/* ── Service card ─────────────────────────────────────────── */
+.service-card {
+  background: var(--white);
+  border: 1px solid var(--fog);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  transition: transform var(--dur-base) var(--ease-spring),
+              box-shadow var(--dur-base);
+  animation: fadeUp var(--dur-slow) var(--ease-out) both;
+}
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+.service-card--paused { opacity: .65; }
+.service-card:nth-child(1) { animation-delay: .04s; }
+.service-card:nth-child(2) { animation-delay: .08s; }
+.service-card:nth-child(3) { animation-delay: .12s; }
+.service-card:nth-child(4) { animation-delay: .16s; }
+
+/* Image */
+.service-card__image {
+  position: relative; height: 186px;
+  background: linear-gradient(135deg, var(--cloud), var(--fog));
+  overflow: hidden;
+}
+.service-card__image img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.service-card:hover .service-card__image img { transform: scale(1.04); }
+.service-card__placeholder {
+  display: flex; align-items: center; justify-content: center;
+  height: 100%; font-size: 3.5rem; color: var(--fog);
+}
+.service-card__status {
+  position: absolute; top: .65rem; right: .65rem;
+}
+
+/* Body */
+.service-card__body { flex: 1; padding: 1.15rem; }
+.service-card__category {
+  font-size: .7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .09em; color: var(--amber-dark); margin-bottom: .4rem;
+  display: block;
+}
+.service-card__title {
+  font-size: .97rem; font-weight: 700; margin-bottom: .5rem;
+  color: var(--ink); line-height: 1.35;
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+.service-card__desc {
+  font-size: .835rem; color: var(--mist); margin-bottom: .9rem; line-height: 1.55;
+}
+.service-card__meta {
+  display: flex; align-items: center; gap: .85rem; font-size: .85rem;
+}
+.service-card__price { font-weight: 800; color: var(--ink); font-size: 1.1rem; font-family: var(--font-display); }
+.service-card__delivery { color: var(--mist); font-size: .8rem; }
+
+/* Actions */
+.service-card__actions {
+  display: flex; gap: .5rem;
+  padding: .85rem 1.15rem;
+  border-top: 1px solid var(--fog);
+  background: var(--snow);
+}
+.service-card__actions form { margin: 0; }
+
+/* ── Service detail page ──────────────────────────────────── */
+.svc-detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 2.5rem; align-items: start;
+}
+@media (max-width: 820px) {
+  .svc-detail-layout { grid-template-columns: 1fr; }
+}
+
+.svc-detail__title {
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  line-height: 1.25; margin-bottom: 1rem;
+  font-family: var(--font-display);
+}
+.svc-detail__seller {
+  display: flex; align-items: center; gap: .85rem;
+  margin-bottom: 1.5rem; flex-wrap: wrap;
+}
+.svc-detail__avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--ink), var(--ink-soft));
+  color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; font-weight: 700; flex-shrink: 0;
+  box-shadow: var(--shadow);
+}
+.svc-detail__image {
+  border-radius: var(--radius-lg); overflow: hidden;
+  margin-bottom: 2rem; border: 1px solid var(--fog);
+  box-shadow: var(--shadow-md);
+}
+.svc-detail__image img { width: 100%; display: block; max-height: 440px; object-fit: cover; }
+.svc-detail__section { margin-bottom: 2rem; }
+.svc-detail__section h2 {
+  font-size: .82rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em; color: var(--mist);
+  margin-bottom: 1rem; padding-bottom: .6rem;
+  border-bottom: 1px solid var(--fog);
+}
+.svc-detail__desc { font-size: .95rem; line-height: 1.75; color: var(--ink); }
+
+/* Order card */
+.svc-order-card {
+  background: var(--white);
+  border: 1px solid var(--fog);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-lg);
+  position: sticky; top: 80px;
+}
+.svc-order-card__price {
+  font-size: 2.4rem; font-weight: 800;
+  font-family: var(--font-display);
+  color: var(--ink);
+  margin-bottom: .25rem; line-height: 1;
+}
+.svc-order-card__price-label { font-size: .8rem; color: var(--mist); margin-bottom: 1.25rem; }
+.svc-order-card__meta {
+  list-style: none; margin-bottom: 1.5rem;
+  display: flex; flex-direction: column; gap: .6rem;
+  font-size: .875rem;
+  padding: 1rem; background: var(--snow);
+  border-radius: var(--radius); border: 1px solid var(--fog);
+}
+.svc-order-card__meta li { display: flex; align-items: center; gap: .5rem; }
+.svc-order-card__note {
+  font-size: .78rem; color: var(--mist);
+  text-align: center; margin-top: .85rem; line-height: 1.5;
+}
+
+/* Related */
+.related-grid { display: flex; flex-direction: column; gap: .65rem; }
+.related-card {
+  display: flex; gap: .75rem; align-items: center;
+  text-decoration: none; color: inherit;
+  border: 1px solid var(--fog); border-radius: var(--radius);
+  padding: .7rem; background: var(--snow);
+  transition: all var(--dur-fast);
+}
+.related-card:hover { border-color: var(--amber); background: #fffbeb; text-decoration: none; }
+.related-card__img { width: 64px; height: 48px; border-radius: var(--radius-sm); overflow: hidden; flex-shrink: 0; background: var(--cloud); }
+.related-card__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.related-card__body p { font-size: .82rem; color: var(--ink); line-height: 1.3; }
+.related-card__body strong { font-size: .875rem; color: var(--amber-dark); font-weight: 700; }
